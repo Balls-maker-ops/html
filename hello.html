@@ -1,0 +1,97 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Random Website Tabs</title>
+</head>
+
+<body>
+
+<script>
+const websites = [
+    "https://www.google.com/search?q=how+to+eat+my+ipod",
+    "https://www.google.com/search?q=how+to+be+a+penguin",
+    "https://www.google.com/search?q=rgb+keyboard",
+    "https://www.google.com/search?q=how+to+eat+pizza",
+	"https://www.amazon.com/dp/B0CJY22C8V?plpRedirect=mhFallback&ref=clp_hp_h_sad&th=1",
+	"https://www.amazon.com/s?k=femboy+thigh+highs",
+	"https://www.amazon.com/s?k=sprunki+backpacks",
+	"https://www.google.com/search?q=ovenless+brownies",
+	"https://www.google.com/search?q=furry+femboy+pics",
+	"https://www.google.com/search?q=he+took+a+bite+of+a+boneless+wing"
+];
+
+const MAX_TABS = 99999999999999999999999999999999999999999999999999999999999999999999;
+
+const OPEN_INTERVAL = 3000;
+
+const CHANGE_INTERVAL = 4000;
+
+let tabs = [];
+let tabCount = 0;
+
+
+function randomWebsite() {
+    return websites[
+        Math.floor(Math.random() * websites.length)
+    ];
+}
+
+
+function openNewTab() {
+
+    if (tabCount >= MAX_TABS) {
+        return;
+    }
+
+    const url = randomWebsite();
+
+    const tab = window.open(url, "_blank");
+
+    if (!tab) {
+        console.log("The browser blocked the new tab.");
+        return;
+    }
+
+    tabs.push(tab);
+    tabCount++;
+
+    console.log(
+        "Opened tab " +
+        tabCount +
+        "/" +
+        MAX_TABS
+    );
+
+    setInterval(() => {
+
+        if (tab.closed) {
+            return;
+        }
+
+        const newUrl = randomWebsite();
+
+        tab.location.href = newUrl;
+
+    }, CHANGE_INTERVAL);
+}
+
+const spawnTimer = setInterval(() => {
+
+    if (tabCount >= MAX_TABS) {
+
+        clearInterval(spawnTimer);
+
+        return;
+    }
+
+    openNewTab();
+
+}, OPEN_INTERVAL);
+
+</script>
+
+</body>
+</html>
+```
